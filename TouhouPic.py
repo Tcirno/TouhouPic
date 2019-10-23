@@ -1,14 +1,13 @@
 # -*- coding: UTF-8 -*-
 
+from urllib import unquote
 import requests
 from bs4 import BeautifulSoup
-import codecs
 import chardet
 import re
 import time
 import random
 import os
-
 import sys
 
 reload(sys)
@@ -52,7 +51,9 @@ for k in data:
                 picurl = picurl.split(' ')[-2]
                 # 构建url 取倒数第二个
                 img_name = picurl.split('/')[-1]
-                img_path = saveturl + r'\{0}'.format(img_name)
+                img_name = unquote(str(img_name.split('.')[-2])) + '.' + str(img_name.split('.')[-1])
+                # url格式化回中文
+                img_path = (saveturl + '/' + str(img_name)).decode('utf-8')
                 try:
                     # 如果根目录不存在就创建该根目录
                     if not os.path.exists(saveturl):
@@ -78,7 +79,9 @@ for k in data:
         for i in datahtml:
             picurl = i.get('src')
             img_name = picurl.split('/')[-1]
-            img_path = saveturl + r'\{0}'.format(img_name)
+            img_name = unquote(str(img_name.split('.')[-2])) + '.' + str(img_name.split('.')[-1])
+            # url格式化回中文
+            img_path = (saveturl + '/' + str(img_name)).decode('utf-8')
             try:
                 # 如果根目录不存在就创建该根目录
                 if not os.path.exists(saveturl):
@@ -122,7 +125,9 @@ for k in data:
                 picurl = i.get('srcset')
                 picurl = picurl.split(' ')[-2]
                 img_name = picurl.split('/')[-1]
-                img_path = saveturl + r'\{0}'.format(img_name)
+                img_name = unquote(str(img_name.split('.')[-2])) + '.' + str(img_name.split('.')[-1])
+                # url格式化回中文
+                img_path = (saveturl + '/' + str(img_name)).decode('utf-8')
                 try:
                     # 如果根目录不存在就创建该根目录
                     if not os.path.exists(saveturl):
@@ -147,7 +152,9 @@ for k in data:
         for i in datahtml:
             picurl = i.get('src')
             img_name = picurl.split('/')[-1]
-            img_path = saveturl + r'\{0}'.format(img_name)
+            img_name = unquote(str(img_name.split('.')[-2])) + '.' + str(img_name.split('.')[-1])
+            # url格式化回中文
+            img_path = (saveturl + '/' + str(img_name)).decode('utf-8')
             try:
                 # 如果根目录不存在就创建该根目录
                 if not os.path.exists(saveturl):
