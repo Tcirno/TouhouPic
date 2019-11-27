@@ -54,7 +54,7 @@ for i in range(1, 50):
                 pass
             if j == (limit + 1):
                 quit(1)
-            print '正在保存' + str(url2) + '页面的图片'
+            print('正在保存' + str(url2) + '页面的图片')
             j += 1
             img_name = url2.split('/')[-1]
             img_path = root_path + r'\{0}'.format(img_name)
