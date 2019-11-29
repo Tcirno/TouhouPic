@@ -23,11 +23,18 @@ header = {
 
 root = 'https://thwiki.cc'
 # rooturl = 'https://thwiki.cc/%E6%96%87%E4%BB%B6:'
+rootsaveturl = './thout/TouhouMp3/'
 rooturl = 'https://thwiki.cc/文件:'
 saveturl = './thout/thmid/'
 
 #从touhouwiki上面获取所有midi音乐
 for i in range(6, 9):
+    if i < 10:
+        saveturl = rootsaveturl + 'th0' + str(i) + '/'
+    else:
+        saveturl = rootsaveturl + 'th' + str(i) + '/'
+    if not os.path.exists(saveturl):
+        os.makedirs(saveturl)
     for j in range(1, 30):
         if j < 10:
             url = rooturl + 'th0' + str(i) + '_' + '0' + str(j) + '.mid'
@@ -40,6 +47,7 @@ for i in range(6, 9):
             if str(data) == '[]':
                 continue
             midurl = data[0].get('href')
+            print('正在写入' + filename)
             f = open(saveturl + filename, 'wb')
             f.write(requests.get(midurl).content)
             f.close()
@@ -55,9 +63,12 @@ for i in range(6, 9):
             if str(data) == '[]':
                 continue
             midurl = data[0].get('href')
+            print('正在写入' + filename)
             f = open(saveturl + filename, 'wb')
             f.write(requests.get(midurl).content)
             f.close()
-        time.sleep(random.randint(0, 2))
+        t = random.randint(5, 10)
+        print('随机休眠' + str(t) + '秒')
+        time.sleep(t)
 
 quit(0)

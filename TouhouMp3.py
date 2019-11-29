@@ -9,10 +9,10 @@ import time
 import random
 import os
 
-import sys
-
-reload(sys)
-sys.setdefaultencoding("utf-8")
+# import sys
+#
+# reload(sys)
+# sys.setdefaultencoding("utf-8")
 
 header = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 '
@@ -20,44 +20,59 @@ header = {
     'Connection': 'close',  # 拿到网页内容后关闭连接
 }
 
-
 root = 'https://thwiki.cc'
-# rooturl = 'https://thwiki.cc/%E6%96%87%E4%BB%B6:'
-rooturl = 'https://thwiki.cc/文件:'
-saveturl = './thout/TouhouMp3/'
+# root_url = 'https://thwiki.cc/%E6%96%87%E4%BB%B6:'
+root_url = 'https://thwiki.cc/文件:'
+root_save_url = './thout/TouhouMp3/'
+save_url = './thout/TouhouMp3/'
+th_name = ''
 
-#从touhouwiki上面获取所有mmp3音乐
+# 从touhouwiki上面获取所有mp3音乐
 for i in range(6, 18):
+    if i < 10:
+        save_url = root_save_url + 'th0' + str(i) + '/'
+        th_name = 'th0'
+    else:
+        save_url = root_save_url + 'th' + str(i) + '/'
+        th_name = 'th'
+    if not os.path.exists(save_url):
+        os.makedirs(save_url)
+    else:
+        continue
     for j in range(1, 30):
         if j < 10:
-            url = rooturl + 'th0' + str(i) + '_' + '0' + str(j) + '.mp3'
-            filename = 'th0' + str(i) + '_' + '0' + str(j) + '.mp3'
+            url = root_url + th_name + str(i) + '_' + '0' + str(j) + '.mp3'
+            filename = th_name + str(i) + '_' + '0' + str(j) + '.mp3'
             html = requests.get(url, headers=header)
             html.encoding = chardet.detect(html.content)['encoding']
             soup = BeautifulSoup(html.text, "html.parser")
-            my = saveturl + 'th0' + str(i) + '0' + str(j) + '.html'
-            data = soup.findAll(name='a', attrs={"href": re.compile(r'(\/\w{1,2}){2}\/')})
+            my = save_url + th_name + str(i) + '0' + str(j) + '.html'
+            data = soup.findAll(name='a', attrs={"href": re.compile(r'(/\w{1,2}){2}/')})
             if str(data) == '[]':
                 continue
             mp3url = data[0].get('href')
-            f = open(saveturl + filename, 'wb')
+            print('正在写入' + filename)
+            f = open(save_url + filename, 'wb')
             f.write(requests.get(mp3url).content)
             f.close()
 
         else:
-            url = rooturl + 'th0' + str(i) + '_' + str(j) + '.mp3'
-            filename = 'th0' + str(i) + '_' + str(j) + '.mp3'
+            url = root_url + th_name + str(i) + '_' + str(j) + '.mp3'
+            filename = th_name + str(i) + '_' + str(j) + '.mp3'
             html = requests.get(url, headers=header)
             html.encoding = chardet.detect(html.content)['encoding']
             soup = BeautifulSoup(html.text, "html.parser")
-            my = saveturl + 'th0' + str(i) + str(j) + '.html'
-            data = soup.findAll(name='a', attrs={"href": re.compile(r'(\/\w{1,2}){2}\/')})
+            my = save_url + th_name + str(i) + str(j) + '.html'
+            data = soup.findAll(name='a', attrs={"href": re.compile(r'(/\w{1,2}){2}/')})
             if str(data) == '[]':
                 continue
             mp3url = data[0].get('href')
-            f = open(saveturl + filename, 'wb')
+            print('正在写入' + filename)
+            f = open(save_url + filename, 'wb')
             f.write(requests.get(mp3url).content)
             f.close()
-        time.sleep(random.randint(0, 2))
+        t = random.randint(5, 10)
+        print('随机休眠' + str(t) + '秒')
+        time.sleep(t)
 
 quit(0)
