@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import requests
 from bs4 import BeautifulSoup
@@ -80,6 +80,7 @@ for k in data:
         for i in datahtml:
             picurl = i.get('src')
             img_name = picurl.split('/')[-1]
+            img_name = parse.unquote(img_name)
             img_path = saveturl + r'\{0}'.format(img_name)
             try:
                 # 如果根目录不存在就创建该根目录
@@ -150,6 +151,7 @@ for k in data:
         for i in datahtml:
             picurl = i.get('src')
             img_name = picurl.split('/')[-1]
+            img_name = parse.unquote(img_name)
             img_path = saveturl + r'\{0}'.format(img_name)
             try:
                 # 如果根目录不存在就创建该根目录
