@@ -8,11 +8,11 @@ import re
 import time
 import random
 import os
+from urllib import parse
+#import sys
 
-import sys
-
-reload(sys)
-sys.setdefaultencoding("utf-8")
+#reload(sys)
+#sys.setdefaultencoding("utf-8")
 
 header = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 '
@@ -34,7 +34,6 @@ data = soup.findAll(name='a', attrs={"href": re.compile(r'\/(\%\w{2})+\/(\%\w{2}
 
 for k in data:
     pichtml = requests.get(root + k.get('href'), headers=header)
-
     pichtml.encoding = chardet.detect(pichtml.content)['encoding']
     souphtml = BeautifulSoup(pichtml.text, "html.parser")
     datahtml = souphtml.findAll(name='img', attrs={"src": re.compile(r'c(/\w{1,2}){2}/(%\w{2})+.jpg')})
@@ -52,6 +51,9 @@ for k in data:
                 picurl = picurl.split(' ')[-2]
                 # 构建url 取倒数第二个
                 img_name = picurl.split('/')[-1]
+                #print(parse.quote(str)) # 对中文进行编码
+                #print(parse.unquote(parse.quote(str))) # 进行解码操作
+                img_name = parse.unquote(img_name)
                 img_path = saveturl + r'\{0}'.format(img_name)
                 try:
                     # 如果根目录不存在就创建该根目录
@@ -122,6 +124,7 @@ for k in data:
                 picurl = i.get('srcset')
                 picurl = picurl.split(' ')[-2]
                 img_name = picurl.split('/')[-1]
+                img_name = parse.unquote(img_name)
                 img_path = saveturl + r'\{0}'.format(img_name)
                 try:
                     # 如果根目录不存在就创建该根目录
