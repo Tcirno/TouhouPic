@@ -71,7 +71,7 @@ for i in range(6, 18):
             f = open(save_url + filename, 'wb')
             f.write(requests.get(mp3url).content)
             f.close()
-        t = random.randint(5, 10)
+        t = random.randint(2, 5)
         print('随机休眠' + str(t) + '秒')
         time.sleep(t)
 
