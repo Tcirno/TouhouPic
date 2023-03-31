@@ -23,8 +23,8 @@ header = {
 root = 'https://thwiki.cc'
 # root_url = 'https://thwiki.cc/%E6%96%87%E4%BB%B6:'
 root_url = 'https://thwiki.cc/文件:'
-root_save_url = './thout/TouhouMp3/'
-save_url = './thout/TouhouMp3/'
+root_save_url = '../thout/TouhouMp3/'
+save_url = '../thout/TouhouMp3/'
 th_name = ''
 
 # 从touhouwiki上面获取所有mp3音乐
